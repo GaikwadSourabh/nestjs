@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, Get, Header, HttpCode, Inject, Param, Post, Put } from "@nestjs/common";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { UsersStore } from "./users.store";
-import { UsersService } from "./users.service";
+import { Body, Controller, Delete, Get, Header, HttpCode, Inject, Param, ParseDatePipe, Post, Put } from "@nestjs/common";
+import { CreateUserDto } from "../dto/create-user.dto";
+import { UsersStore } from "../store/users.store";
+import { UsersService } from "../services/users.service";
 
 @Controller('/user')
 export class UserController{
@@ -15,6 +15,8 @@ createUser(@Body() createUserDto:CreateUserDto)
 
     return{message :'USER ADDED'};
 }
+
+
 
 @Get()
 findAllUsers(){
