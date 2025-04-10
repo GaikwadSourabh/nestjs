@@ -1,9 +1,44 @@
 import { Body, Controller, Delete, Get, Header, HttpCode, Inject, Param, Post, Put } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UsersStore } from "./users.store";
+import { UsersService } from "./users.service";
 
 @Controller('/user')
 export class UserController{
+
+    constructor(private usersServices:UsersService){}
+
+@Post()
+createUser(@Body() createUserDto:CreateUserDto)
+{
+    this.usersServices.addUser(createUserDto);
+
+    return{message :'USER ADDED'};
+}
+
+@Get()
+findAllUsers(){
+    return this.usersServices.getUsers();
+}
+
+@Get(':id')
+findUser(@Param('id') id:number){
+    return this.usersServices.getUser(+id);
+}
+
+@Put(':id')
+updateUser(@Param('id') id:number,@Body() updateUserDto:CreateUserDto)
+{
+     this.usersServices.updateUser(+id,updateUserDto);
+     return {message : 'USER UPDATED'};
+}
+
+@Delete(':id')
+deleteUser(@Param('id') id:number){
+    this.usersServices.deleteUser(+id);
+    return{message:'USER DELETED'};
+}
+
 
 
 
@@ -15,10 +50,10 @@ export class UserController{
 //    }
 
 
-constructor(@Inject('MAIL') private mail:string[])
-{
-    console.log(mail);
-}
+// constructor(@Inject('MAIL') private mail:string[])
+// {
+//     console.log(mail);
+// }
 
 
     //  USERS: CreateUserDto[] = [];
