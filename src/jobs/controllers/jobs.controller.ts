@@ -1,9 +1,11 @@
-import { Body, Controller, Get, Param, Post, Query, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseFilters, UsePipes, ValidationPipe } from "@nestjs/common";
 import { CreateJobDTO } from "../create-job.dto";
 import { Paginable } from "../interface/paginable.interface"
 import { JoiValidationPipe } from "../joi-validation.pipe";
 // {createJobSchema} from "../create-job.schema"
 import { JobsService } from "../services/jobs.service";
+import { IdExceptionFilter } from "src/exceptions/id-exception.filter";
+import { IdException } from "src/exceptions/id-exceptions";
 
 @Controller("/jobs")
 export class JobsController{
@@ -30,9 +32,13 @@ export class JobsController{
     }
 
     @Get(":id")
-    findJob(@Param("id",new ValidationPipe({transform:true})) id:number)
+    // @UseFilters(IdExceptionFilter)
+    findJob(@Param("id",ParseIntPipe) id:number)
     {
-        console.log(typeof id);
-        return {success:true};
+        if(id<0)
+        {
+            throw new IdException();
+        }
+        return {success:true,id};
     }
 }

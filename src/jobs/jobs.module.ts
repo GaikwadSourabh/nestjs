@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, OnModuleInit } from "@nestjs/common";
 import { JobsController } from "./controllers/jobs.controller";
 import { JobsService } from "./services/jobs.service";
 
@@ -7,4 +7,9 @@ import { JobsService } from "./services/jobs.service";
     providers:[JobsService],
     exports: [JobsService]
 })
-export class JobsModule{}
+export class JobsModule implements OnModuleInit
+{
+    onModuleInit() {
+        console.log("Jobs module init");
+    }
+}
