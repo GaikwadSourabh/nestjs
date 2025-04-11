@@ -1,11 +1,12 @@
 import { BeforeApplicationShutdown, Module, OnApplicationBootstrap, OnApplicationShutdown } from '@nestjs/common';
 import { usersModule } from './users/users.module';
 import { JobsModule } from './jobs/jobs.module';
+import { EmployeeModule } from './employee/employee.module';
 
 
 
 @Module({
-  imports: [usersModule,JobsModule],
+  imports: [usersModule,JobsModule,EmployeeModule],
   controllers: [],
   providers: [],
 })
